@@ -7,6 +7,8 @@ const blocks = document.querySelectorAll('.block'),
     reset = document.querySelector('.reset');
 
 let i = 0;
+let controller = new AbortController();
+let signal = controller.signal;
 
 function addEvent() {
     blocks.forEach(block => {
@@ -23,8 +25,9 @@ function addEvent() {
                 }
                 verifyIfWin();
             }
-        });
+        }, {signal});
     });
+    console.log(controller.signal);
 }
 
 addEvent();
@@ -94,22 +97,31 @@ let xPoints = 0,
 function xWin() {
     xPoints++;
     scoreX.textContent = `${xPoints}`;
+    controller.abort();
 }
 
 function oWin() {
     oPoints++;
     scoreO.textContent = `${oPoints}`;
+    controller.abort();
 }
 
 newGame.addEventListener('click', () => {
     removeChilds();
     i = 0;
+    controller = new AbortController();
+    signal = controller.signal;
+    addEvent();
 });
 
 reset.addEventListener('click', function () {
     scoreO.textContent = `0`;
     scoreX.textContent = `0`;
     removeChilds();
+    i = 0;
+    controller = new AbortController();
+    signal = controller.signal;
+    addEvent();
 });
 
 function removeChilds() {
