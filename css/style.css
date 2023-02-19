@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: rgb(0, 51, 128);
+    border: 3px solid red;
+    padding: 10px;
+}
+
+.title {
+    color: white;
+    font-size: 40px;
+    border: 3px solid white;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.table {
+    display: grid;
+    grid-template: repeat(3, 130px) / repeat(3, 130px);
+    gap: 10px;
+}
+
+.block {
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.statistics {
+    padding: 20px;
+    text-align: center;
+}
+
+.players {
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    border-bottom: 1px solid yellow;
+    padding: 10px;
+}
+
+.playerX {
+    margin-bottom: 10px;
+}
+
+.playerX, .playerO {
+    display: flex;
+    justify-content: center;
+}
+
+.score {
+    margin-left: 20px;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.new-game {
+    margin-bottom: 20px;
+}
+
+.new-game, .reset {
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+}
+
+.new-game:active, .reset:active {
+    background-color: rgb(185, 185, 185);
+}
+
+.icon-x, .icon-o {
+    position: relative;
+    z-index: 1000;
+}
+
+.x, .o {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 1000;
+}
+
+.x {
+    fill: white;
+}
+
+.o {
+    fill: red;
+}
