@@ -4,11 +4,17 @@ const blocks = document.querySelectorAll('.block'),
     scoreX = document.querySelector('.playerX .score'),
     scoreO = document.querySelector('.playerO .score'),
     newGame = document.querySelector('.new-game'),
-    reset = document.querySelector('.reset');
+    reset = document.querySelector('.reset'),
+    modal = document.querySelector('.modal'),
+    winer = document.querySelector('.winer'),
+    closeModal = document.querySelector('.close-modal'),
+    playAgain = document.querySelector('.play-again');
 
-let i = 0;
+let i = 0,
+    completeBlock = 0;
 let controller = new AbortController();
 let signal = controller.signal;
+
 
 function addEvent() {
     blocks.forEach(block => {
@@ -23,6 +29,7 @@ function addEvent() {
                     block.insertAdjacentHTML('beforeend', '<div class="icon-o"><svg class="o" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M224 96C135.6 96 64 167.6 64 256s71.6 160 160 160s160-71.6 160-160s-71.6-160-160-160zM0 256C0 132.3 100.3 32 224 32s224 100.3 224 224s-100.3 224-224 224S0 379.7 0 256z"/></svg></div>');
                     i--;
                 }
+                completeBlock++;
                 verifyIfWin();
             }
         }, {signal});
@@ -87,6 +94,8 @@ function verifyIfWin() {
             xWin();
         } else if ((blocks[2].firstChild.classList.contains('icon-o') && blocks[4].firstChild.classList.contains('icon-o') && blocks[6].firstChild.classList.contains('icon-o'))) {
             oWin();
+        } else if (completeBlock === 9){
+            draw();
         }
     }
 }
@@ -98,12 +107,22 @@ function xWin() {
     xPoints++;
     scoreX.textContent = `${xPoints}`;
     controller.abort();
+    winer.textContent = 'Player X win'
+    modal.style.display = 'grid';
+    modal.style.placeItems = 'center';
+    modal.classList.add('animation');
+    completeBlock = 0;
 }
 
 function oWin() {
     oPoints++;
     scoreO.textContent = `${oPoints}`;
     controller.abort();
+    winer.textContent = 'Player O win'
+    modal.style.display = 'grid';
+    modal.style.placeItems = 'center';
+    modal.classList.add('animation');
+    completeBlock = 0;
 }
 
 newGame.addEventListener('click', () => {
@@ -112,20 +131,52 @@ newGame.addEventListener('click', () => {
     controller = new AbortController();
     signal = controller.signal;
     addEvent();
+    modal.style.display = 'none';
+    modal.classList.remove('animation');
+    completeBlock = 0;
 });
 
 reset.addEventListener('click', function () {
-    scoreO.textContent = `0`;
-    scoreX.textContent = `0`;
+    xPoints = 0;
+    oPoints = 0;
+    scoreO.textContent = `${oPoints}`;
+    scoreX.textContent = `${xPoints}`;
     removeChilds();
     i = 0;
     controller = new AbortController();
     signal = controller.signal;
     addEvent();
+    modal.style.display = 'none';
+    modal.classList.remove('animation');
+    completeBlock = 0;
 });
 
 function removeChilds() {
     blocks.forEach(item => {
         item.innerHTML = '';
     });
+}
+
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    modal.classList.remove('animation');
+});
+
+playAgain.addEventListener('click', () => {
+    removeChilds();
+    i = 0;
+    controller = new AbortController();
+    signal = controller.signal;
+    addEvent();
+    modal.style.display = 'none';
+    modal.classList.remove('animation');
+    completeBlock = 0;
+});
+
+function draw(){
+    modal.style.display = 'grid';
+    modal.style.placeItems = 'center';
+    modal.classList.add('animation');
+    winer.textContent = 'Draw'
+    completeBlock = 0;
 }
