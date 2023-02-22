@@ -34,7 +34,6 @@ function addEvent() {
             }
         }, {signal});
     });
-    console.log(controller.signal);
 }
 
 addEvent();
